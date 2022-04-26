@@ -1,0 +1,23 @@
+{
+  "sqlcita": {
+    "host": "219.228.148.181",
+    "port": "3100",
+    "database": "ouyeel",
+    "user": "root",
+    "password": "admin"
+  },
+  "mysql": {
+    "host": "219.228.148.181",
+    "port": "3306",
+    "database": "ouyeel",
+    "user": "root",
+    "password": "admin"
+  },
+  "clientNum": 1,
+  "requestNum": 1000,
+  "requestInterval": 2,
+  "requestDistribution": "universe",
+  "tableSqlFiles": [
+    "./config/tqcbc233.json"
+  ]
+}
