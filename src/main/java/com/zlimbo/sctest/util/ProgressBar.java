@@ -7,7 +7,7 @@ public class ProgressBar {
     private char rightBoundChar = ']';
     private char unfinisedChar = '=';
     private char finishedChar = '█';
-    private int barLength = 50;
+    private int barLength = 42;
 
     private String msg = "";
     private int leftBound = 0;
@@ -23,7 +23,6 @@ public class ProgressBar {
         this.rightBound = rightBound;
         startTime = System.nanoTime();
         int num = (rightBound - leftBound) + 1;
-        System.out.printf("\n==== num:%d, msg:\"%s\" ====\n", num, msg);
     }
 
     public ProgressBar(int rightBound, String msg) {
@@ -61,12 +60,10 @@ public class ProgressBar {
         sb.append(rightBoundChar);
         double take = (System.nanoTime() - startTime) / 1e9;
         double tps = current / take;
-        sb.append(String.format(" (%d/%d) (%.2f%%) (take:%.2fs) (tps:%.2f)",
-                current, rightBound, percentage * 100, take, tps));
+        sb.append(String.format(" (%d/%d) (%.2f%%) (take:%.2fs) (tps:%.2f) (%s)",
+                current, rightBound, percentage * 100, take, tps, msg));
         if (finised) {
             sb.append("\n");
-            sb.append(String.format("==== finish, num:%d, take:%.2fs, tps:%.2f ====\n\n",
-                    (rightBound - leftBound + 1), take, tps));
         } else {
             sb.append("\t\t\t");
         }
@@ -74,6 +71,11 @@ public class ProgressBar {
         System.out.flush();
     }
 
+    /**
+     * 测试进度条
+     * @param args
+     * @throws InterruptedException
+     */
     static public void main(String[] args) throws InterruptedException {
 
         int n = 1000;

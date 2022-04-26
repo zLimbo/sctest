@@ -22,7 +22,7 @@ public class JdbcConn implements AutoCloseable {
                 connConfig.getDatabase() +
                 "?useSSL=false&characterEncoding=utf8";
         connection = DriverManager.getConnection(url, connConfig.getUser(), connConfig.getPassword());
-        System.out.println(connConfig.getConnInfo() + " connect success!");
+        System.out.println("database " + connConfig.getConnInfo() + " connect success!");
     }
 
     @Override

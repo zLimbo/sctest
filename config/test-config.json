@@ -14,7 +14,7 @@
     "password": "admin"
   },
   "clientNum": 1,
-  "requestNum": 1000,
+  "requestNum": 42,
   "requestInterval": 2,
   "requestDistribution": "universe",
   "tableSqlFiles": [

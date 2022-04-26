@@ -46,27 +46,28 @@ public class ScTest {
 
     public void testCreateAndManyInsert() throws SQLException, IOException {
         int requestNum = scTestConfig.getRequestNum();
-        for (String tableFilePath: tableSqls.keySet()) {
-            TableSql tableSql = tableSqls.get(tableFilePath);
+        for (TableSql tableSql: tableSqls.values()) {
 
-            System.out.print("mysql create table ...");
+            System.out.printf("\n==== test table [%s] start ====\n", tableSql.getTableName());
+            System.out.print("= mysql create table ...");
             long start = System.nanoTime();
             mysql.sqlUpdate(tableSql.getCreateSqlInMysql());
             double mysqlCreateTake = (System.nanoTime() - start) / 1e9;
-            System.out.printf("\rmysql create table success, take: %.2fs\n", mysqlCreateTake);
+            System.out.printf("\r= mysql create table success, take: %.2fs\n", mysqlCreateTake);
 
-            System.out.print("sqlcita create table ...");
+            System.out.print("= sqlcita create table ...");
             start = System.nanoTime();
             sqlcita.sqlUpdate(tableSql.getCreateSql());
             double sqlcitaCreateTake = (System.nanoTime() - start) / 1e9;
-            System.out.printf("\rsqlcita create table success, take: %.2fs\n", sqlcitaCreateTake);
+            System.out.printf("\r= sqlcita create table success, take: %.2fs\n", sqlcitaCreateTake);
 
-            System.out.println("sqlcita insert repeat " + requestNum + " times");
+            System.out.println("= sqlcita insert repeat " + requestNum + " times");
             sqlInsertRepeat(tableSql.getInsertSql(), requestNum);
 
-            System.out.print("mysql drop table ...");
+            System.out.print("= mysql drop table ...");
             mysql.sqlUpdate("drop table " + tableSql.getTableName());
-            System.out.print("\rmysql drop table success");
+            System.out.print("\r= mysql drop table success");
+            System.out.printf("\n==== test table [%s] finish ====\n", tableSql.getTableName());
         }
     }
 
