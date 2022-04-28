@@ -1,4 +1,4 @@
-package com.zlimbo.sctest.util;
+package com.zlimbo.sctest.display;
 
 
 public class ProgressBar {
@@ -34,6 +34,11 @@ public class ProgressBar {
         finised = false;
     }
 
+    synchronized public void teminate() {
+        finised = true;
+        draw();
+    }
+
     synchronized public void step(int current) {
         if (finised || current < this.current || current > rightBound) {
             return;
@@ -46,7 +51,10 @@ public class ProgressBar {
     }
 
     public void draw() {
-        double percentage = (double)(current - leftBound) / (rightBound - leftBound);
+        double percentage = 0.0;
+        if (current - leftBound > 0) {
+            percentage = (double)(current - leftBound) / (rightBound - leftBound);
+        }
         int mid = (int)Math.round(percentage * barLength);
         StringBuilder sb = new StringBuilder();
         sb.append('\r');

@@ -3,10 +3,7 @@ package com.zlimbo.sctest.connect;
 
 import com.zlimbo.sctest.config.ConnConfig;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class JdbcConn implements AutoCloseable {
 
@@ -22,7 +19,7 @@ public class JdbcConn implements AutoCloseable {
                 connConfig.getDatabase() +
                 "?useSSL=false&characterEncoding=utf8";
         connection = DriverManager.getConnection(url, connConfig.getUser(), connConfig.getPassword());
-        System.out.println("database " + connConfig.getConnInfo() + " connect success!");
+        System.out.println("> database " + connConfig.getConnInfo() + " connect success!");
     }
 
     @Override
@@ -38,5 +35,17 @@ public class JdbcConn implements AutoCloseable {
 
     public void sqlQuery(String sql) {
 
+    }
+
+    public int queryCount(String sql) throws SQLException {
+        int count = 0;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+        return count;
     }
 }
